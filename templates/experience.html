@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience - {{ name }}</title>
+    <title>EXPERIENCE - {{ name }}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -14,8 +14,8 @@
         <div class="container">
             <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
             <nav>
-                <a href="{% url 'main:show_main' %}">PROFILE</a>
-                <a href="{% url 'main:show_experience' %}">EXPERIENCE</a>
+                <a href="{% url 'main:show_main' %}" class="nav-box">PROFILE</a>
+                <a href="{% url 'main:show_experience' %}" class="nav-box">EXPERIENCE</a>
             </nav>
         </div>
     </header>
@@ -24,7 +24,7 @@
     <section class="experience-section" id="experience">
         <div class="container">
             <p class="section-kicker">What I'm Doing</p>
-            <h1>Experience</h1>
+            <h1>EXPERIENCE</h1>
 
             <div class="experience-grid">
                 {% for experience in experience_list %}

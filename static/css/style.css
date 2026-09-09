@@ -18,7 +18,7 @@
     --bg-profile: var(--paper);
     --bg-skills: var(--paper-dark);
     --bg-experience: var(--paper);
-    --bg-education: var(--paper-dark);
+    --bg-education: var(--paper);
 
     --font-fraunces: 'Fraunces', serif;
     --font-playfair: 'Playfair Display', serif;
@@ -432,13 +432,13 @@ body {
 
 /* education section */
 .section-education {
-    background-color: var(--bg-education);
-    color: var(--paper);
+    background-color: var(--bg-education, #fdfbf7);
+    color: var(--ink, #1a1a1a);
     padding: 5rem 0;
 }
 
-.section-education .section-kicker { color: var(--accent); }
-.section-education .section-title { color: #ffffff; }
+.section-education .section-kicker { color: #8c3b2b; }
+.section-education .section-title { color: var(--ink); }
 
 .education-grid {
     display: grid;
@@ -448,25 +448,26 @@ body {
 
 /* Card Education */
 .education-card {
-    background-color: rgba(255, 255, 255, 0.08); 
-    border: 1px solid rgba(255, 255, 255, 0.2); 
+    background-color: #ffffff; 
+    border: 1px solid var(--line, #e5e7eb); 
     border-left: 4px solid #e11d48;
     border-radius: 8px;
     padding: 1.5rem;
-    color: #ffffff;                                
+    color: var(--ink, #1a1a1a);
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);                                
 }
 
 .education-card h3 {
-    color: #ffffff;
+    color: #4a2c20;
     margin: 0.5rem 0;
 }
 
 .education-card p {
-    color: #cbd5e1; 
+    color: #333333; 
 }
 
 .education-year {
-    color: #94a3b8; 
+    color: #8c3b2b; 
     font-size: 0.85rem;
     font-weight: 600;
 }

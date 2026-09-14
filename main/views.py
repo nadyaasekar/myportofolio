@@ -18,7 +18,7 @@ def show_main(request):
 
 def show_experience(request):
     context = {
-        "name": "Nadya Sekar",
+        "name": "NADYA SEKAR",
         "experience_list": Experience.objects.all(),
     }
     return render(request, "experience.html", context)
@@ -26,7 +26,7 @@ def show_experience(request):
 
 def show_education(request):
     context = {
-        "name": "Nadya Sekar",
+        "name": "NADYA SEKAR",
         "education_list": Education.objects.all(),
     }
     return render(request, "education.html", context)

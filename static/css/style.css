@@ -56,10 +56,11 @@ body {
 }
 
 .brand {
-    font-family: var(--font-fraunces);
+    font-family: 'Fraunces', 'Playfair Display', serif;
     font-size: 1.1rem;
     font-weight: 800;
     letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: var(--paper);
     text-decoration: none;
 }
@@ -265,9 +266,11 @@ body {
 }
 
 .section-title {
-    font-family: var(--font-playfair);
+    font-family: 'Fraunces', 'Playfair Display', serif;
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 800;
+    color: #1a2536;
+    text-transform: uppercase;
     margin-bottom: 2.5rem;
 }
 
@@ -281,7 +284,14 @@ body {
 }
 
 .section-skills .section-kicker { color: var(--accent); }
-.section-skills .section-title { color: #ffffff; }
+.section-skills .section-title { 
+    font-family: 'Fraunces', 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    color: #1a2536;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem; 
+}
 
 
 .skills { padding: 5rem 0; }

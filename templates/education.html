@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDUCATION - {{ name }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800;9..144,900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400&family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
+            <nav>
+                <a href="{% url 'main:show_main' %}" class="nav-box">PROFILE</a>
+                <a href="{% url 'main:show_experience' %}" class="nav-box">EXPERIENCE</a>
+                <a href="{% url 'main:show_education' %}" class="nav-box">EDUCATION</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="section-education" id="education">
+            <div class="container">
+                <p class="section-kicker">Academic Background</p>
+                <h2 class="section-title">EDUCATION</h2>
+                
+                <div class="education-grid">
+                    {% for edu in education_list %}
+                        <article class="education-card">
+                            <span class="education-year">{{ edu.start_year }} - {{ edu.end_year }}</span>
+                            <h3>{{ edu.degree }}</h3>
+                            <p>{{ edu.institution }}</p>
+                        </article>
+                    {% empty %}
+                        <p class="empty-state">Belum ada riwayat pendidikan yang ditambahkan.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2026 {{ name }}. Fakultas Ilmu Komputer, Universitas Indonesia.</p>
+        </div>
+    </footer>
+</body>
+</html>

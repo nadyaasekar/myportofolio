@@ -17,7 +17,7 @@
     --bg-header: var(--line);
     --bg-profile: var(--paper);
     --bg-skills: var(--paper-dark);
-    --bg-experience: var(--paper);
+    --bg-experience: var(--paper-dark);
     --bg-education: var(--paper);
 
     --font-fraunces: 'Fraunces', serif;
@@ -288,7 +288,7 @@ body {
     font-family: 'Fraunces', 'Playfair Display', serif;
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 800;
-    color: #1a2536;
+    color: var(--paper);
     text-transform: uppercase;
     margin-bottom: 2.5rem; 
 }
@@ -339,12 +339,18 @@ body {
 
 /* experience section tutor 2 */
 .experience-section {
+    background-color: var(--paper-dark);
     padding: 4rem 0;
+    color: var(--paper);
     border-top: 1px solid var(--line);
 }
 
+.experience-section .section-title {
+    color: var(--paper);
+}
+
 .section-kicker {
-    color: var(--accent-dark);
+    color: #94a3b8;
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.08em;
@@ -352,6 +358,7 @@ body {
 }
 
 .experience-section h1 {
+    color: #94a3b8;
     margin: 0.4rem 0 1.5rem;
     font-size: 2rem;
 }
@@ -379,6 +386,7 @@ body {
 .experience-card h2 {
     margin: 0.5rem 0;
     font-size: 1.25rem;
+    font-family: 'Fraunces', serif;
     color: var(--ink);
 }
 

@@ -109,9 +109,9 @@ educations = [
 print("Memulai seeding data...")
 
 for exp in experiences:
-    Experience.objects.get_or_create(**exp)
+    Experience.objects.create(**exp)
 
 for edu in educations:
-    Education.objects.get_or_create(**edu)
+    Education.objects.create(**edu)
 
 print("Berhasil memasukkan semua data Experience dan Education!")

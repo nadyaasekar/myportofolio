@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')  # Ganti 'your_project' dengan nama folder project-mu
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myportofolio.settings')  # Ganti 'your_project' dengan nama folder project-mu
 django.setup()
 
 from main.models import Experience, Education

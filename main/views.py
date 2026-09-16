@@ -4,6 +4,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from main.forms import ExperienceForm
+from django.conf import settings
 
 from main.models import Experience, Education
 
@@ -46,12 +47,21 @@ def show_education(request):
     return render(request, "education.html", context)
 
 def create_experience(request):
-    form = ExperienceForm(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "New Experience Has Been Added!")
-        return redirect("main:show_experience")
+    if request.method == "POST":
+        secret_key = request.POST.get("secret_key")
+        if secret_key != settings.PORTFOLIO_SECRET_KEY:
+            messages.error(request, "Kode rahasia salah! Data gagal ditambahkan.")
+            return redirect('main:show_main')
+        
+        form = ExperienceForm(request.POST or None)
 
+        if form.is_valid():
+            form.save()
+            messages.success(request, "New Experience Has Been Added!")
+            return redirect("main:show_experience")
+    else:
+        form = ExperienceForm()
+        
     context = {
         "name": "NADYA SEKAR",
         "form": form,
@@ -69,9 +79,14 @@ def get_experience_json(request):
     return HttpResponse(experiences_json, content_type="application/json")
 
 def delete_experience(request, experience_id):
-    experience = get_object_or_404(Experience, pk=experience_id)
-
     if request.method == "POST":
+        secret_key = request.POST.get("secret_key")
+
+        if secret_key != settings.PORTFOLIO_SECRET_KEY:
+            messages.error(request, "Kode rahasia salah! Data gagal dihapus.")
+            return redirect('main:show_experience')
+
+        experience = get_object_or_404(Experience, pk=experience_id)
         experience.delete()
         messages.success(request, "Experience berhasil dihapus!")
         return redirect("main:show_experience")

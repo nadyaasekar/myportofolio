@@ -779,6 +779,20 @@ select option {
     margin-top: 1.5rem;
 }
 
+.experience-delete-modal input[type="password"],
+.form-control {
+    color: #1e1e1e !important;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 6px;
+    width: 100%;
+}
+
+/* biar placeholder-nya (teks petunjuk) warnanya sedikit pudar */
+.form-control::placeholder {
+    color: #888888;
+}
+
 .button.button-danger.experience-delete-trigger {
     background: #6e140d;
     padding: 0.35rem 0.75rem;

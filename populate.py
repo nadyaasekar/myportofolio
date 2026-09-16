@@ -4,9 +4,10 @@ import django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project.settings')  # Ganti 'your_project' dengan nama folder project-mu
 django.setup()
 
-from main.models import Experience
+from main.models import Experience, Education
 from datetime import date
 
+# Data Experience
 experiences = [
     {
         "title": "Staff of Human Resources Division (DDP 0)",
@@ -82,7 +83,35 @@ experiences = [
     }
 ]
 
-for exp in experiences:
-    Experience.objects.create(**exp)
+# Data Education
+educations = [
+    {
+        "title": "S1 Ilmu Komputer - Universitas Indonesia",
+        "description": "Undergraduate Student at Faculty of Computer Science",
+        "started_at": "2024-08-01",
+        "ended_at": None,
+    },
+    {
+        "title": "SMA - SMA Labschool Kebayoran",
+        "description": "High School Diploma",
+        "started_at": "2021-07-01",
+        "ended_at": "2024-05-01",
+    },
+    {
+        "title": "SMP - SMP An-Nisaa'",
+        "description": "Junior High School Diploma",
+        "started_at": "2018-07-01",
+        "ended_at": "2021-05-01",
+    },
+]
 
-print("Berhasil memasukkan semua data experience!")
+# Eksekusi Seeding
+print("Memulai seeding data...")
+
+for exp in experiences:
+    Experience.objects.get_or_create(**exp)
+
+for edu in educations:
+    Education.objects.get_or_create(**edu)
+
+print("Berhasil memasukkan semua data Experience dan Education!")

@@ -86,22 +86,22 @@ experiences = [
 # Data Education
 educations = [
     {
-        "title": "S1 Ilmu Komputer - Universitas Indonesia",
-        "description": "Undergraduate Student at Faculty of Computer Science",
-        "started_at": date(2024, 8, 1),
-        "ended_at": None,
+        "institution": "Universitas Indonesia",
+        "degree": "S1 Ilmu Komputer",
+        "start_year": 2024,
+        "end_year": "Sekarang",
     },
     {
-        "title": "SMA - SMA Labschool Kebayoran",
-        "description": "High School Diploma",
-        "started_at": date(2021, 7, 1),
-        "ended_at": date(2024, 5, 1),
+        "institution": "SMA Labschool Kebayoran",
+        "degree": "SMA",
+        "start_year": 2021,
+        "end_year": "2024",
     },
     {
-        "title": "SMP - SMP An-Nisaa'",
-        "description": "Junior High School Diploma",
-        "started_at": date(2018, 7, 1),
-        "ended_at": date(2021, 5, 1),
+        "institution": "SMP An-Nisaa'",
+        "degree": "SMP",
+        "start_year": 2018,
+        "end_year": "2021",
     },
 ]
 

@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-q3_(&04#ihxom62$&vmivu*ep%61$^mor72xqs3@2(q=9u#pae'
 
 # Kode rahasia untuk autentikasi manual form/header
-PORTFOLIO_SECRET_KEY = os.getenv('PORTFOLIO_SECRET_KEY', 'default-key-aman')
+PORTFOLIO_SECRET_KEY = os.getenv('PORTFOLIO_SECRET_KEY', 'Kayrana2106@')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True

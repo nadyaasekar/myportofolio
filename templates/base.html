@@ -25,6 +25,18 @@
         </div>
     </header>
 
+    {% if messages %}
+        <div class="container" style="margin-top: 1rem;">
+         <ul class="messages">
+            {% for message in messages %}
+             <li class="{{ message.tags }}" style="padding: 10px; margin-bottom: 8px; border-radius: 6px; list-style: none; background: #f8d7da; color: #721c24;">
+                {{ message }}
+             </li>
+            {% endfor %}
+         </ul>
+        </div>
+    {% endif %}
+
     {% block content %}
     
     {% endblock content %}

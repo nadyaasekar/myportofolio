@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <title>Add Education - {{ name }}</title>
+{% endblock meta %}
+
+{% block content %}
+<main class="form-page-container">
+    <div class="form-card">
+        <div class="form-header">
+            <span class="section-kicker" style="color: var(--accent-dark);">ACADEMIC HISTORY</span>
+            <h1 class="form-title">
+                {% if education %}EDIT EDUCATION{% else %}ADD NEW EDUCATION{% endif %}
+            </h1>
+        </div>
+
+        <form method="post" 
+              action="{% if education %}{% url 'main:update_education' education.id %}{% else %}{% url 'main:create_education' %}{% endif %}"
+              class="custom-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="degree" class="form-label">Gelar / Jenjang Pendidikan</label>
+                <input type="text" id="degree" name="degree" class="form-input"
+                       value="{{ education.degree|default:'' }}"
+                       placeholder="Contoh: S1 Ilmu Komputer / SMA" required>
+            </div>
+
+            <div class="form-group">
+                <label for="institution" class="form-label">Institusi / Universitas / Sekolah</label>
+                <input type="text" id="institution" name="institution" class="form-input"
+                       value="{{ education.institution|default:'' }}"
+                       placeholder="Contoh: Universitas Indonesia" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="start_year" class="form-label">Tahun Mulai</label>
+                    <input type="text" id="start_year" name="start_year" class="form-input"
+                           value="{{ education.start_year|default:'' }}"
+                           placeholder="Contoh: 2025" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="end_year" class="form-label">Tahun Selesai</label>
+                    <input type="text" id="end_year" name="end_year" class="form-input"
+                           value="{{ education.end_year|default:'' }}"
+                           placeholder="Contoh: Sekarang / 2029" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="secret_key" class="form-label">Kode Rahasia Admin</label>
+                <input type="password" name="secret_key" id="secret_key" class="form-input" placeholder="Masukkan kode rahasia..." required>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="button button-primary">
+                    {% if education %}SIMPAN PERUBAHAN{% else %}ADD NEW EDUCATION{% endif %}
+                </button>
+                <a href="{% url 'main:show_education' %}" class="button button-secondary">BATAL</a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock content %}

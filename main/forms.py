@@ -40,3 +40,38 @@ class ExperienceForm(forms.ModelForm):
                 attrs={"type": "date", "class": "form-control"}
             ),
         }
+
+from django.forms import ModelForm, TextInput, NumberInput
+from main.models import Education
+
+from django.forms import ModelForm, TextInput, NumberInput
+from main.models import Education
+
+class EducationForm(ModelForm):
+    class Meta:
+        model = Education
+        fields = ["institution", "degree", "start_year", "end_year"]
+        labels = {
+            "institution": "Nama Institusi / Universitas",
+            "degree": "Gelar / Program Studi",
+            "start_year": "Tahun Mulai",
+            "end_year": "Tahun Selesai",
+        }
+        widgets = {
+            "institution": TextInput(attrs={
+                "placeholder": "Universitas Indonesia",
+                "class": "form-control"
+            }),
+            "degree": TextInput(attrs={
+                "placeholder": "S1 Ilmu Komputer",
+                "class": "form-control"
+            }),
+            "start_year": NumberInput(attrs={
+                "placeholder": "2024",
+                "class": "form-control"
+            }),
+            "end_year": TextInput(attrs={
+                "placeholder": "Sekarang / 2028",
+                "class": "form-control"
+            }),
+        }

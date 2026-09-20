@@ -1,0 +1,54 @@
+<p class="education-status">
+    <button type="button"
+            class="button button-danger education-delete-trigger"
+            popovertarget="delete-education-{{ education.id }}"
+            aria-label="Delete {{ education.title }}"
+            title="Delete Education">
+        Delete Education
+    </button>
+</p>
+<div id="delete-education-{{ education.id }}"
+     class="education-delete-modal"
+     popover="auto"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="delete-education-title-{{ education.id }}">
+    <button type="button"
+            class="education-delete-modal__backdrop"
+            popovertarget="delete-education-{{ education.id }}"
+            popovertargetaction="hide"
+            aria-label="Tutup konfirmasi hapus"></button>
+    <div class="education-delete-modal__content">
+        <button type="button"
+                class="education-delete-modal__close"
+                popovertarget="delete-education-{{ education.id }}"
+                popovertargetaction="hide"
+                aria-label="Tutup konfirmasi hapus">×</button>
+        <h2 id="delete-education-title-{{ education.id }}">Hapus Education?</h2>
+        <p>
+            Apakah Anda yakin ingin menghapus
+            <strong>{{ education.degree }}</strong> di <strong>{{ education.institution }}</strong>? (masukkan password)
+        </p>
+
+        <form method="post" action="{% url 'main:delete_education' education.id %}">
+            {% csrf_token %}
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <input type="password" 
+                        name="secret_key" 
+                        class="form-control" 
+                        placeholder="Masukkan kode rahasia..." 
+                        style="color: #1e1e1e; background-color: #ffffff; border: 1px solid #ccc; padding: 8px; width: 100%; border-radius: 6px;"
+                    required>
+            </div>
+
+            <div class="education-delete-modal__actions">
+                <button type="button"
+                        class="button button-secondary"
+                        popovertarget="delete-education-{{ education.id }}"
+                        popovertargetaction="hide">Batal</button>
+                <button type="submit" class="button button-danger">Ya, Hapus</button>
+            </div>
+        </form>
+    </div>
+</div>

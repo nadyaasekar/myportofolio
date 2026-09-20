@@ -55,7 +55,10 @@
                             <img src="{{ experience.thumbnail }}" alt="{{ experience.title }}" style="max-width: 100%; border-radius: var(--radius); margin-top: 0.5rem;">
                         {% endif %}
 
-                        {% include 'components/experience_delete_modal.html' %}
+                        <div class="card-actions">
+                            <a href="{% url 'main:update_experience' experience.id %}" class="button button-secondary">Edit</a>
+                            {% include 'components/experience_delete_modal.html' %}
+                        </div>
                     </article>
                 {% empty %}
                     <p class="empty-state">

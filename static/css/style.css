@@ -549,14 +549,14 @@ body {
     color: var(--accent-dark);
 }
 
-* Row holding the Edit + Delete buttons on an education/experience card */
+/* Row holding the Edit + Delete buttons on an education/experience card */
 .card-actions {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
     flex-wrap: wrap;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
  
 .card-actions .button,
@@ -569,7 +569,12 @@ body {
 
 .card-actions .experience-status,
 .card-actions .education-status {
+    order: 1;
     margin: 0;
+}
+
+.card-actions .button-secondary {
+    order: 2;
 }
 
 .empty-state {

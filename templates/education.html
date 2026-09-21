@@ -12,7 +12,9 @@
                         <p class="section-kicker">Academic Background</p>
                         <h2 class="section-title">EDUCATION</h2>
                     </div>
-                    <a href="{% url 'main:create_education' %}" class="button">ADD NEW EDUCATION</a>
+                    {% if user.is_superuser %}
+                        <a href="{% url 'main:create_education' %}" class="button">ADD NEW EDUCATION</a>
+                    {% endif %}
                 </div>
 
                 <form method="get" 
@@ -35,8 +37,11 @@
                             <p>{{ edu.institution }}</p>
 
                             <div class="card-actions">
-                                <a href="{% url 'main:update_education' edu.id %}" class="button button-secondary">Edit</a>
-                                {% include 'components/education_delete_modal.html' with education=edu %}
+                                {% include "components/education_star.html" with education=edu %}
+                                {% if user.is_superuser %}
+                                    <a href="{% url 'main:update_education' edu.id %}" class="button button-secondary">Edit</a>
+                                    {% include 'components/education_delete_modal.html' with education=edu %}
+                                {% endif %}
                             </div>
                             </article>
                     {% empty %}

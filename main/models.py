@@ -1,6 +1,7 @@
 # Create your models here.
 import uuid
 from django.db import models
+from django.contrib.auth.models import User
 
 class Experience(models.Model):
     EXPERIENCE_CHOICES = [
@@ -26,6 +27,10 @@ class Experience(models.Model):
     @property
     def is_ongoing(self):
         return self.ended_at is None
+
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_experiences", blank=True
+    )
     
 
 class Education(models.Model):
@@ -37,3 +42,7 @@ class Education(models.Model):
 
     def __str__(self):
         return f"{self.degree} - {self.institution}"
+
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_educations", blank=True
+    )

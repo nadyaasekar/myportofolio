@@ -24,7 +24,7 @@ Kelas : PBP D
 ## AI DISCLOSURE !!
 Dalam pengerjaan Tugas Pemrograman Berbasis Platform (PBP) ini, saya memanfaatkan Google Gemini sebagai thought partner dan kolaborator AI dengan rincian pemanfaatan sebagai berikut:
 
-- Tools yang Digunakan: **Google Gemini** 
+- Tools yang Digunakan: **Google Gemini** dan **ChatGPT**
 - Strategi Prompting: Menggunakan pendekatan iterative prompting dan contextual debugging—berdiskusi secara bertahap mulai dari perancangan model Experience, pengecekan kondisi kosong (empty state) pada Django Template Language (DTL), validasi named route dan navbar dengan tag {% url %}, hingga penyesuaian format pertanyaan reflektif.
 
 **Bagian Spesifik yang Dibantu:**
@@ -55,5 +55,16 @@ kenapa failed ya?"
 
 "gimana cara button profile nya jadi kayak yg button gitu?"
 "Teks link "Profile" dan "Experience" di navbar kamu masih menggunakan warna default link HTML (ungu/biru) dan belum menggunakan class tombol yang sama dengan SKILLS, EXPERIENCE, dan EDUCATION...."
+
+**Menggunakan chatgpt juga untuk**
+1. Bagian yang dibantu AI mencakup:
+2. Pemeriksaan peran superuser dan anggota grup Editor.
+3. Penyesuaian kondisi tombol pada template.
+4. Penghapusan mekanisme kode rahasia pada form dan penggantinya dengan otorisasi akun.
+5. Pembatasan metode POST pada star dan hapus.
+6. Peninjauan CSRF dan endpoint JSON.
+7. Panduan pengaturan akun dan grup melalui Django Admin.
+8. Diagnosis data Experience yang tersimpan berulang.
+9. Penyusunan dokumentasi dan skenario pengujian.
 
 

@@ -10,10 +10,17 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 import datetime
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import PermissionDenied        
+from django.core.exceptions import PermissionDenied 
+from django.views.decorators.http import require_POST    
+from django.http import HttpResponseNotAllowed   
 
 from main.models import Experience, Education
 
+def is_editor(user):
+    return (
+        user.is_authenticated
+        and user.groups.filter(name="Editor").exists()
+    )
 
 def show_main(request):
     last_login = request.COOKIES.get('last_login', 'Belum ada sesi login / Cookie tidak ditemukan')
@@ -43,6 +50,7 @@ def show_experience(request):
         "name": "NADYA SEKAR",
         "experience_list": experiences,
         "title_query": title_query,
+        "is_editor": is_editor(request.user),
     }
     return render(request, "experience.html", context)
 
@@ -60,6 +68,7 @@ def show_education(request):
         "name": "NADYA SEKAR",
         "education_list": education_list,
         "search_query": search_query,
+        "is_editor": is_editor(request.user),
     }
     return render(request, "education.html", context)
 
@@ -67,12 +76,10 @@ def show_education(request):
 # CREATE
 @login_required(login_url="/login/") 
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     if request.method == "POST":
-        secret_key = request.POST.get("secret_key")
-        if secret_key != settings.PORTFOLIO_SECRET_KEY:
-            messages.error(request, "Kode rahasia salah! Data gagal ditambahkan.")
-            return redirect('main:show_main')
-        
         form = ExperienceForm(request.POST or None)
 
         if form.is_valid():
@@ -90,12 +97,10 @@ def create_experience(request):
 
 @login_required(login_url="/login/") 
 def create_education(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     if request.method == "POST":
-        secret_key = request.POST.get("secret_key")
-        if secret_key != settings.PORTFOLIO_SECRET_KEY:
-            messages.error(request, "Kode rahasia salah! Data gagal ditambahkan.")
-            return redirect('main:show_main')
-        
         form = EducationForm(request.POST or None)
 
         if form.is_valid():
@@ -137,48 +142,38 @@ def get_education_json(request):
 # DELETE
 @login_required(login_url="/login/") 
 def delete_experience(request, experience_id):
-    if request.method == "POST":
-        secret_key = request.POST.get("secret_key")
-
-        if secret_key != settings.PORTFOLIO_SECRET_KEY:
-            messages.error(request, "Kode rahasia salah! Data gagal dihapus.")
-            return redirect('main:show_experience')
-
-        experience = get_object_or_404(Experience, pk=experience_id)
-        experience.delete()
-        messages.success(request, "Experience berhasil dihapus!")
-        return redirect("main:show_experience")
-
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    if request.method != "POST":
+        return HttpResponseNotAllowed(["POST"])
+    
+    experience = get_object_or_404(Experience, pk=experience_id)
+    experience.delete()
+    messages.success(request, "Experience berhasil dihapus!")
     return redirect("main:show_experience")
 
 @login_required(login_url="/login/") 
 def delete_education(request, education_id):
-    if request.method == "POST":
-        secret_key = request.POST.get("secret_key")
-
-        if secret_key != settings.PORTFOLIO_SECRET_KEY:
-            messages.error(request, "Kode rahasia salah! Data gagal dihapus.")
-            return redirect('main:show_education')
-
-        education = get_object_or_404(Education, pk=education_id)
-        education.delete()
-        messages.success(request, "Education berhasil dihapus!")
-        return redirect("main:show_education")
-
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    if request.method != "POST":
+            return HttpResponseNotAllowed(["POST"])
+    
+    education = get_object_or_404(Education, pk=education_id)
+    education.delete()
+    messages.success(request, "Education berhasil dihapus!")
     return redirect("main:show_education")
 
 
 # UPDATE
 @login_required(login_url="/login/") 
 def update_experience(request, experience_id):
+    if not (request.user.is_superuser or is_editor(request.user)):
+        raise PermissionDenied
+
     experience = get_object_or_404(Experience, pk=experience_id)
  
     if request.method == "POST":
-        secret_key = request.POST.get("secret_key")
-        if secret_key != settings.PORTFOLIO_SECRET_KEY:
-            messages.error(request, "Kode rahasia salah! Data gagal diperbarui.")
-            return redirect("main:show_experience")
- 
         form = ExperienceForm(request.POST, instance=experience)
  
         if form.is_valid():
@@ -197,14 +192,12 @@ def update_experience(request, experience_id):
 
 @login_required(login_url="/login/") 
 def update_education(request, education_id):
+    if not (request.user.is_superuser or is_editor(request.user)):
+        raise PermissionDenied
+    
     education = get_object_or_404(Education, pk=education_id)
  
     if request.method == "POST":
-        secret_key = request.POST.get("secret_key")
-        if secret_key != settings.PORTFOLIO_SECRET_KEY:
-            messages.error(request, "Kode rahasia salah! Data gagal diperbarui.")
-            return redirect("main:show_education")
- 
         form = EducationForm(request.POST, instance=education)
  
         if form.is_valid():
@@ -262,26 +255,26 @@ def logout_user(request):
 
 # STAR
 @login_required(login_url="/login/")
+@require_POST
 def toggle_star_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
 
-    if request.method == "POST":
-        if request.user in experience.starred_by.all():
-            experience.starred_by.remove(request.user)
-        else:
-            experience.starred_by.add(request.user)
+    if experience.starred_by.filter(pk=request.user.pk).exists():
+        experience.starred_by.remove(request.user)
+    else:
+        experience.starred_by.add(request.user)
 
     return redirect("main:show_experience")
 
 
 @login_required(login_url="/login/")
+@require_POST
 def toggle_star_education(request, education_id):
     education = get_object_or_404(Education, pk=education_id)
 
-    if request.method == "POST":
-        if request.user in education.starred_by.all():
-            education.starred_by.remove(request.user)
-        else:
-            education.starred_by.add(request.user)
+    if education.starred_by.filter(pk=request.user.pk).exists():
+        education.starred_by.remove(request.user)
+    else:
+        education.starred_by.add(request.user)
 
     return redirect("main:show_education")

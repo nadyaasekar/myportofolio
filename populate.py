@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myportofolio.settings')  # Ganti 'your_project' dengan nama folder project-mu
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "portofolio.settings")
 django.setup()
 
 from main.models import Experience, Education
@@ -106,12 +106,30 @@ educations = [
 ]
 
 # Eksekusi Seeding
-print("Memulai seeding data...")
+def seed_data():
+    print("Memulai seeding data...")
 
-for exp in experiences:
-    Experience.objects.create(**exp)
+    for exp in experiences:
+        exists = Experience.objects.filter(
+            title=exp["title"],
+            started_at=exp["started_at"],
+        ).exists()
 
-for edu in educations:
-    Education.objects.create(**edu)
+        if not exists:
+            Experience.objects.create(**exp)
 
-print("Berhasil memasukkan semua data Experience dan Education!")
+    for edu in educations:
+        exists = Education.objects.filter(
+            institution=edu["institution"],
+            degree=edu["degree"],
+            start_year=edu["start_year"],
+        ).exists()
+
+        if not exists:
+            Education.objects.create(**edu)
+
+    print("Selesai. Data yang sudah ada tidak ditambahkan lagi.")
+
+
+if __name__ == "__main__":
+    seed_data()

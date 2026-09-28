@@ -38,9 +38,16 @@
 
                             <div class="card-actions">
                                 {% include "components/education_star.html" with education=edu %}
+
+                                {% if user.is_superuser or is_editor %}
+                                    <a href="{% url 'main:update_education' edu.id %}"
+                                    class="button button-secondary">
+                                        Edit
+                                    </a>
+                                {% endif %}
+
                                 {% if user.is_superuser %}
-                                    <a href="{% url 'main:update_education' edu.id %}" class="button button-secondary">Edit</a>
-                                    {% include 'components/education_delete_modal.html' with education=edu %}
+                                    {% include "components/education_delete_modal.html" with education=edu %}
                                 {% endif %}
                             </div>
                             </article>

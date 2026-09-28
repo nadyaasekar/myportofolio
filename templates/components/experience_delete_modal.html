@@ -33,15 +33,6 @@
         <form method="post" action="{% url 'main:delete_experience' experience.id %}">
             {% csrf_token %}
 
-            <div class="form-group" style="margin-bottom: 1rem;">
-                <input type="password" 
-                        name="secret_key" 
-                        class="form-control" 
-                        placeholder="Masukkan kode rahasia..." 
-                        style="color: #1e1e1e; background-color: #ffffff; border: 1px solid #ccc; padding: 8px; width: 100%; border-radius: 6px;"
-                    required>
-            </div>
-
             <div class="experience-delete-modal__actions">
                 <button type="button"
                         class="button button-secondary"

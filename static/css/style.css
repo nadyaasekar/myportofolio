@@ -1025,3 +1025,167 @@ body {
     font-size: 0.75rem;
     border-radius: 999px;
 }
+
+/* toast */
+.toast-component {
+    position: fixed;
+    inset: auto 2rem 2rem auto;
+    margin: 0;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 25px rgba(28, 25, 23, 0.15);
+    display: none;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--paper);
+    border: 1px solid var(--line);
+    color: inherit;
+}
+
+.toast-component:popover-open {
+    display: flex;
+}
+
+.toast-hidden {
+    opacity: 0;
+    transform: translateY(150%);
+    pointer-events: none;
+}
+
+.toast-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+}
+
+.toast-message {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Modifikasi border kiri berdasarkan tipe notifikasi */
+.toast-success { border-left: 4px solid #22c55e; }
+.toast-error { border-left: 4px solid #b42318; }
+.toast-normal { border-left: 4px solid var(--accent); }
+
+.hide {
+    display: none !important;
+}
+
+
+/* Modal tambah Experience */
+.experience-form-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1rem;
+    border: 0;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
+}
+
+.experience-form-modal:popover-open {
+    display: flex;
+}
+
+.experience-form-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    background: rgba(0, 0, 0, 0.55);
+    cursor: default;
+}
+
+.experience-form-modal__content {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    width: min(100%, 640px);
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding: 2rem;
+    border: 1px solid #ded5ca;
+    border-radius: 14px;
+    background: #fffaf3;
+    color: #25344a;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.25);
+}
+
+.experience-form-modal__content h2 {
+    margin: 0 2rem 1.5rem 0;
+    color: #25344a;
+    font-size: 1.5rem;
+}
+
+.experience-form-modal__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #25344a;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.experience-form-modal__content .form-group {
+    margin-bottom: 1rem;
+}
+
+.experience-form-modal__content label {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: #25344a;
+}
+
+.experience-form-modal__content input,
+.experience-form-modal__content select,
+.experience-form-modal__content textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #b7b7b7;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #25344a;
+    font: inherit;
+}
+
+.experience-form-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .experience-form-modal__content {
+        padding: 1.5rem;
+    }
+
+    .experience-form-modal__actions {
+        flex-direction: column-reverse;
+    }
+
+    .experience-form-modal__actions .button {
+        width: 100%;
+    }
+}

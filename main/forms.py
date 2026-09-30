@@ -1,5 +1,8 @@
 from django import forms
-from main.models import Experience
+from main.models import Experience, Education
+from django.forms import ModelForm, TextInput, NumberInput
+from django.core.exceptions import ValidationError
+from django.utils.html import strip_tags
 
 class ExperienceForm(forms.ModelForm):
     class Meta:
@@ -40,12 +43,28 @@ class ExperienceForm(forms.ModelForm):
                 attrs={"type": "date", "class": "form-control"}
             ),
         }
+        
+    def clean_title(self):
+        title = strip_tags(self.cleaned_data["title"]).strip()
 
-from django.forms import ModelForm, TextInput, NumberInput
-from main.models import Education
+        if not title:
+            raise ValidationError(
+                "Judul Experience tidak boleh hanya berisi tag HTML."
+            )
 
-from django.forms import ModelForm, TextInput, NumberInput
-from main.models import Education
+        return title
+
+    def clean_description(self):
+        description = strip_tags(
+            self.cleaned_data["description"]
+        ).strip()
+
+        if not description:
+            raise ValidationError(
+                "Deskripsi Experience tidak boleh hanya berisi tag HTML."
+            )
+
+        return description
 
 class EducationForm(ModelForm):
     class Meta:

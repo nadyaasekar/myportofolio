@@ -47,20 +47,11 @@ def show_experience(request):
     return render(request, "experience.html", context)
 
 def show_education(request):
-    search_query = request.GET.get("q", "").strip()
-
-    json_response = get_education_json(request)
-    education_list = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    education_list = [item.object for item in education_list]
-
     context = {
         "name": "NADYA SEKAR",
-        "education_list": education_list,
-        "search_query": search_query,
+        "search_query":  request.GET.get("q", "").strip(),
         "is_editor": is_editor(request.user),
+        "form": EducationForm(),
     }
     return render(request, "education.html", context)
 
@@ -150,14 +141,39 @@ def get_experience_json(request):
 
 def get_education_json(request):
     search_query = request.GET.get("q", "").strip()
-    education_qs = Education.objects.all()
+    educations = Education.objects.prefetch_related(
+        "starred_by"
+    ).order_by("-start_year", "institution", "id")
+
     if search_query:
         education_qs = education_qs.filter(
             Q(institution__icontains=search_query) | Q(degree__icontains=search_query)
         )
 
-    education_json = serializers.serialize("json", education_qs, use_natural_foreign_keys=True)
-    return HttpResponse(education_json, content_type="application/json")
+    data = []
+
+    for education in educations:
+        starred_users = list(education.starred_by.all())
+
+        data.append({
+            "pk": str(education.pk),
+            "fields": {
+                "institution": education.institution,
+                "degree": education.degree,
+                "start_year": education.start_year,
+                "end_year": education.end_year,
+                "star_count": len(starred_users),
+                "is_starred": (
+                    request.user.is_authenticated
+                    and any(
+                        user.pk == request.user.pk
+                        for user in starred_users
+                    )
+                ),
+            },
+        })
+
+    return JsonResponse(data, safe=False)
  
 # DELETE
 @login_required(login_url="/login/") 
@@ -323,6 +339,37 @@ def create_experience_ajax(request):
             {
                 "message": "Experience berhasil ditambahkan.",
                 "pk": str(experience.id),
+            },
+            status=201,
+        )
+
+    return JsonResponse(
+        {"errors": form.errors.get_json_data()},
+        status=400,
+    )
+
+@require_POST
+def create_education_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {
+                "message": (
+                    "Hanya pemilik portofolio yang dapat "
+                    "menambahkan Education."
+                )
+            },
+            status=403,
+        )
+
+    form = EducationForm(request.POST)
+
+    if form.is_valid():
+        education = form.save()
+
+        return JsonResponse(
+            {
+                "message": "Education berhasil ditambahkan.",
+                "pk": str(education.pk),
             },
             status=201,
         )

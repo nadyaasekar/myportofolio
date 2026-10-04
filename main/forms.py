@@ -94,3 +94,39 @@ class EducationForm(ModelForm):
                 "class": "form-control"
             }),
         }
+
+    def clean_institution(self):
+        institution = strip_tags(
+            self.cleaned_data["institution"]
+        ).strip()
+
+        if not institution:
+            raise ValidationError(
+                "Nama institusi tidak boleh kosong atau hanya berisi tag HTML."
+            )
+
+        return institution
+
+    def clean_degree(self):
+        degree = strip_tags(
+            self.cleaned_data["degree"]
+        ).strip()
+
+        if not degree:
+            raise ValidationError(
+                "Gelar tidak boleh kosong atau hanya berisi tag HTML."
+            )
+
+        return degree
+
+    def clean_end_year(self):
+        end_year = strip_tags(
+            self.cleaned_data["end_year"]
+        ).strip()
+
+        if not end_year:
+            raise ValidationError(
+                "Tahun selesai tidak boleh kosong atau hanya berisi tag HTML."
+            )
+
+        return end_year
